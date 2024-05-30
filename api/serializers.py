@@ -7,8 +7,8 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        # fields = '__all__'
-        exclude = ("watchlist",)
+        fields = '__all__'
+        read_only_fields = ['reviewer', "watchlist"]
 
 
 class WatchSerializer(serializers.ModelSerializer):
@@ -17,6 +17,11 @@ class WatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = WatchList
         fields = "__all__"
+
+    def create(self, validated_data):
+        watchlist = self.context['watchlist']
+        reviewer = self.context['reviewer']
+        return Review.objects.create(reviewer=reviewer, watchlist=watchlist, **validated_data)
 
 
 class StreamingPlatformSerializer(serializers.HyperlinkedModelSerializer):  # users url instead of id
