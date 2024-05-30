@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "c8de630e-1f57-4177-9087-52b720488c9d",
+		"name": "rest_framework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32126877"
+	},
+	"item": [
+		{
+			"name": "Watch",
+			"item": [
+				{
+					"name": "PostWatchList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"ddljdlfldfjdlfjdlfdfjdlfjdlf\",\n    \"description\":\"this is movie 8\",\n    \"activate\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}all/",
+							"host": [
+								"{{url}}all"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWatchList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}all",
+							"host": [
+								"{{url}}all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeWatchListSingleField",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\":\"new description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}movies-2/",
+							"host": [
+								"{{url}}movies-2"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWatchContent",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}movie-1/",
+							"host": [
+								"{{url}}movie-1"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stream",
+			"item": [
+				{
+					"name": "GetStream",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-stream}}",
+							"host": [
+								"{{url-stream}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditStream",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url-stream}}",
+							"host": [
+								"{{url-stream}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddStream",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"streamer\": \"streamer-5\",\n    \"about\": \"this is streamer-5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-stream}}",
+							"host": [
+								"{{url-stream}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-reviews}}",
+							"host": [
+								"{{url-reviews}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 3 ,\n    \"description\":\"Not so engaging\",\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/watch/movies-1/reviews/create/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"watch",
+								"movies-1",
+								"reviews",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
