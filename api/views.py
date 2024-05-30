@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .models import WatchList, StreamingPlatform, Review
 from .serializers import WatchSerializer, StreamingPlatformSerializer, ReviewSerializer
+from api.custom_permission import AdminOrReadOnly, ReviewUserOrReadOnly
 
 
 class Home(APIView):
@@ -34,21 +35,29 @@ class CreateReview(generics.CreateAPIView):
 
         if review_query.exists():
             raise NotFound(f"{reviewer_}  already posted a review", status.HTTP_400_BAD_REQUEST)
+        if watchlist_.number_rating == 0:
+            watchlist_.average_rating = serializer.validated_data['rating']
+        else:
+            watchlist_.average_rating = (watchlist_.average_rating + serializer.validated_data['rating']) / 2
+        watchlist_.number_rating += 1
         serializer.save(watchlist=watchlist_, reviewer=reviewer_)
 
 
 class ReviewList(generics.ListAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [AdminOrReadOnly]
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [ReviewUserOrReadOnly]
 
 
 class WatchReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         slug = self.kwargs['slug']
