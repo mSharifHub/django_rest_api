@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\":\"ddljdlfldfjdlfjdlfdfjdlfjdlf\",\n    \"description\":\"this is movie 8\",\n    \"activate\": true\n}",
+							"raw": "{\n    \"title\":\"\",\n    \"description\":\"\",\n    \"activate\": \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -56,7 +56,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\":\"new description\"\n}",
+							"raw": "{\n    \"description\":\"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -132,7 +132,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"streamer\": \"streamer-5\",\n    \"about\": \"this is streamer-5\"\n}",
+							"raw": "{\n    \"streamer\": \"\",\n    \"about\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"rating\": 3 ,\n    \"description\":\"Not so engaging\",\n    \"active\": false\n}",
+							"raw": "{\n    \"rating\":  ,\n    \"description\":\"\",\n    \"active\": \n}",
 							"options": {
 								"raw": {
 									"language": "json"
