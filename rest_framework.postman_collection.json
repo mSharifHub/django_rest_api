@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "c8de630e-1f57-4177-9087-52b720488c9d",
 		"name": "rest_framework",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "32126877"
 	},
 	"item": [
@@ -23,15 +23,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url}}all/",
-							"host": [
-								"{{url}}all"
-							],
-							"path": [
-								""
-							]
-						}
+						"url": "{{url}}all/"
 					},
 					"response": []
 				},
@@ -40,12 +32,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{url}}all",
-							"host": [
-								"{{url}}all"
-							]
-						}
+						"url": "{{url}}all"
 					},
 					"response": []
 				},
@@ -63,15 +50,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url}}movies-2/",
-							"host": [
-								"{{url}}movies-2"
-							],
-							"path": [
-								""
-							]
-						}
+						"url": "{{url}}movies-2/"
 					},
 					"response": []
 				},
@@ -80,15 +59,30 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{url}}movie-1/",
-							"host": [
-								"{{url}}movie-1"
-							],
-							"path": [
-								""
-							]
+						"url": "{{url}}movie-1/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reviews By Slug",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
 						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": "http://127.0.0.1:8000/api/watch/content-1/reviews/"
 					},
 					"response": []
 				}
@@ -102,12 +96,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{url-stream}}",
-							"host": [
-								"{{url-stream}}"
-							]
-						}
+						"url": "{{url-stream}}"
 					},
 					"response": []
 				},
@@ -116,12 +105,7 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"url": {
-							"raw": "{{url-stream}}",
-							"host": [
-								"{{url-stream}}"
-							]
-						}
+						"url": "{{url-stream}}"
 					},
 					"response": []
 				},
@@ -139,12 +123,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-stream}}",
-							"host": [
-								"{{url-stream}}"
-							]
-						}
+						"url": "{{url-stream}}"
 					},
 					"response": []
 				}
@@ -155,51 +134,106 @@
 			"item": [
 				{
 					"name": "Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url-reviews}}",
-							"host": [
-								"{{url-reviews}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post Review",
-					"request": {
-						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 3c7b973cd6468a3c0fa004ba4113ce2965395ec0"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"rating\":  ,\n    \"description\":\"\",\n    \"active\": \n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/watch/movies-1/reviews/create/",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"watch",
-								"movies-1",
-								"reviews",
-								"create",
-								""
+						"url": "{{url-reviews}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Post Review",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 3c7b973cd6468a3c0fa004ba4113ce2965395ec0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 4 ,\n    \"description\":\"this season was great. I really enjoy it\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/api/watch/content-1/reviews/create/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
 							]
-						}
+						},
+						"url": "http://127.0.0.1:8000/auth/login/"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"confirm_password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/auth/register/"
 					},
 					"response": []
 				}
@@ -209,7 +243,8 @@
 			"name": "root",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "http://127.0.0.1:8000/"
 			},
 			"response": []
 		}
