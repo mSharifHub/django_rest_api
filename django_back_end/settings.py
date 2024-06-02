@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "api",
     "django_extensions",
+    "rest_framework.authtoken",
 
 ]
 
@@ -78,9 +79,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "django_back_end.wsgi.application"
 
 REST_FRAMEWORK = {
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-    ]
+
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
 }
 
 # Database
