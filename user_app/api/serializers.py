@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainSerializer
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -30,3 +31,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         validated_data.pop('confirm_password')  # removes confirm password from validated_data after validation
         user = User.objects.create_user(**validated_data)
         return user
+
+
+class CustomTokenObtainSerializer(TokenObtainSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data.update({'username': self.user.username})
+        return data
