@@ -32,7 +32,29 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{url}}all"
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/watch/all/?average_rating__gte=4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"watch",
+								"all",
+								""
+							],
+							"query": [
+								{
+									"key": "average_rating__gte",
+									"value": "4"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -155,7 +177,21 @@
 								}
 							}
 						},
-						"url": "{{url-reviews}}"
+						"url": {
+							"raw": "{{url-reviews}}/?active=true",
+							"host": [
+								"{{url-reviews}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -185,6 +221,29 @@
 							}
 						},
 						"url": "http://127.0.0.1:8000/api/watch/content-1/reviews/create/"
+					},
+					"response": []
+				},
+				{
+					"name": "GetWithFilterUser&Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-reviews}}/?active=true",
+							"host": [
+								"{{url-reviews}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -234,6 +293,137 @@
 							}
 						},
 						"url": "http://127.0.0.1:8000/auth/register/"
+					},
+					"response": []
+				},
+				{
+					"name": "log out",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNzUwMDIyMCwiaWF0IjoxNzE3NDEzODIwLCJqdGkiOiIyZWY2MDAzMTAzZDg0MThmYjFlYTc3ODhiNWY4NmU4NSIsInVzZXJfaWQiOjl9.db2KffODzT1zRZuCx8FXX515xLEtwZ4pAyb_zBOzgzE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/logout/?Authorization=Bearer ",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"logout",
+								""
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "Bearer "
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Generate JWT",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/auth/api/token/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/api/token/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"api",
+								"token",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Search Review",
+			"item": [
+				{
+					"name": "Search User Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/reviews/?username=mock_user",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"reviews",
+								""
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "mock_user"
+								}
+							]
+						}
 					},
 					"response": []
 				}

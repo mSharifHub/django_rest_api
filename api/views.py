@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, generics, viewsets
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
@@ -59,6 +60,8 @@ class ReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
     permission_classes = [AdminOrReadOnly]
     throttle_classes = [ReviewListThrottle]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['reviewer__username', 'active']
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -96,9 +99,10 @@ class StreamingChannels(viewsets.ModelViewSet):
 
 
 class WatchListView(APIView):
+
     def get(self, request):
         movies = WatchList.objects.all()
-        serializer = WatchSerializer(movies, many=True, context={"request": request})
+        serializer = WatchSerializer(many=True, context={"request": request})
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request):
