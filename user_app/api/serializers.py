@@ -20,11 +20,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
-        if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError('Passwords do not match')
+        if 'password' in data and 'confirm_password' in data:
+            if data['password'] != data['confirm_password']:
+                raise serializers.ValidationError('Passwords must match')
+        if 'email' not in data or not data['email']:
+            raise serializers.ValidationError('Email field is required')
         if User.objects.filter(email=data['email']).exists():
-            raise serializers.ValidationError(f'could not register  {data["email"]} to {data["username"]}')
-
+            raise serializers.ValidationError('Email already registered')
         return data
 
     def create(self, validated_data):
