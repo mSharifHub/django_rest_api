@@ -1,0 +1,21 @@
+# Django and related packages
+Django>=3.2,<4.0
+
+# Django REST Framework
+djangorestframework>=3.12.0
+
+# Django Filters (for filtering querysets in DRF)
+django-filter>=2.4.0
+
+# JWT authentication
+djangorestframework-simplejwt>=4.6.0
+
+# Database adapter (PostgreSQL example, replace if needed)
+psycopg2>=2.8
+
+# Django Extensions (for additional management commands and utilities)
+django-extensions>=3.1.0
+
+# Test requirements (if using coverage or other tools)
+coverage>=5.0
+
