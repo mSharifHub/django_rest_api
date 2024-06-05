@@ -51,7 +51,17 @@
    ```shell
    python manage.py test api.tests.WatchListBaseTestCase
 
+2. **Test Create Watch List Content**:  
+   ```shell
+   python manage.py test api.tests.CreateWatchListTestCase
 
-   
- 
+
+3** Retrieve Watch List Content**:  
+   ```shell
+   python manage.py test api.tests.RetrieveWatchListTestCase
+
+
+
+
+
 

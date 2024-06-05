@@ -6,41 +6,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from api.models import StreamingPlatform, WatchList
 
 
-class WatchListBaseTestCase(APITestCase):
-    def setUp(self):
-        self.platform = StreamingPlatform.objects.create(
-            streamer="Netflix",
-            about="Popular streaming",
-            url="https://www.netflix.com",
-        )
-
-        self.watchlist_data = {
-            "title": "Invasion",
-            "description": "science fiction",
-            "platform": self.platform,
-            "active": True,
-            "average_rating": 4.5,
-            "number_rating": 80,
-        }
-
-        self.invalid_watchlist_data = {
-            "title": "",
-            "description": "Top suspense. No title",
-            "platform": self.platform,
-            "active": False,
-            "average_rating": 2.0,
-            "number_rating": 3
-        }
-
-        self.admin_user = User.objects.create_superuser('admin', '<EMAIL>', '<PASSWORD>')
-        self.client = APIClient()
-
-        refresh_token = RefreshToken.for_user(self.admin_user)
-        self.access_token = str(refresh_token.access_token)
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer' + self.access_token)
-        print(self.access_token)  # debug self.access token due to IDE warning
-
-
 class StreamPlatformTestCase(APITestCase):
 
     def setUp(self):
@@ -99,3 +64,66 @@ class StreamPlatformTestCase(APITestCase):
         response = self.client.delete(reverse("streaming_channels_detail", args=[streaming_platform.id]))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(StreamingPlatform.objects.count(), 0)
+
+
+class WatchListBaseTestCase(APITestCase):
+    def setUp(self):
+        self.platform = StreamingPlatform.objects.create(
+            streamer="Netflix",
+            about="Popular streaming",
+            url="https://www.netflix.com",
+        )
+
+        self.watchlist_data = {
+            "title": "Invasion",
+            "description": "science fiction",
+            "platform": self.platform.id,
+            "active": True,
+            "average_rating": 4.5,
+            "number_rating": 80,
+        }
+
+        self.invalid_watchlist_data = {
+            "title": "",
+            "description": "Top suspense. No title",
+            "platform": self.platform.id,
+            "active": False,
+            "average_rating": 2.0,
+            "number_rating": 3
+        }
+
+        self.admin_user = User.objects.create_superuser('admin', '<EMAIL>', '<PASSWORD>')
+        self.client = APIClient()
+
+        refresh_token = RefreshToken.for_user(self.admin_user)
+        self.access_token = str(refresh_token.access_token)
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer' + self.access_token)
+
+
+class CreateWatchListTestCase(WatchListBaseTestCase):
+    def test_create_watch_list(self):
+        response = self.client.post(reverse('watch_list'), self.watchlist_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(WatchList.objects.count(), 1)
+        self.assertIn('Invasion', response.json().get('title'))
+
+    def test_create_watch_list_invalid(self):
+        response = self.client.post(reverse('watch_list'), self.invalid_watchlist_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(WatchList.objects.count(), 0)
+
+
+class RetrieveWatchListTestCase(WatchListBaseTestCase):
+    def test_retrieve_watch_list(self):
+        watch_list = WatchList.objects.create(
+            title="Invasion",
+            description="science fiction horror show",
+            platform=self.platform,
+            active=True,
+            average_rating=4.5,
+            number_rating=80,
+        )
+        response = self.client.get(reverse('watch_list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0]['title'], 'Invasion')

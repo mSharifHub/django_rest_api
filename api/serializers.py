@@ -18,10 +18,10 @@ class WatchSerializer(serializers.ModelSerializer):
         model = WatchList
         fields = "__all__"
 
-    def create(self, validated_data):
-        watchlist = self.context['watchlist']
-        reviewer = self.context['reviewer']
-        return Review.objects.create(reviewer=reviewer, watchlist=watchlist, **validated_data)
+    # def create(self, validated_data):
+    #     watchlist = self.context['watchlist']
+    #     reviewer = self.context['reviewer']
+    #     return Review.objects.create(reviewer=reviewer, watchlist=watchlist, **validated_data)
 
 
 class StreamingPlatformSerializer(serializers.HyperlinkedModelSerializer):

@@ -111,8 +111,8 @@ class StreamingPlatformDetailView(generics.RetrieveUpdateDestroyAPIView):
 class WatchListView(APIView):
 
     def get(self, request):
-        movies = WatchList.objects.all()
-        serializer = WatchSerializer(many=True, context={"request": request})
+        content = WatchList.objects.all()
+        serializer = WatchSerializer(content, many=True, context={"request": request})
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request):
@@ -134,19 +134,19 @@ class WatchDetail(APIView):
             return None
 
     def get(self, request, slug):
-        movie = WatchDetail.get_object(slug)
-        if movie is None:
+        content = WatchDetail.get_object(slug)
+        if content is None:
             return JsonResponse({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = WatchSerializer(movie, context={'request': request})
+        serializer = WatchSerializer(content, context={'request': request})
         return JsonResponse(serializer.data)
 
     def put(self, request, slug):
-        movie = WatchDetail.get_object(slug)
-        if movie is None:
+        content = WatchDetail.get_object(slug)
+        if content is None:
             return JsonResponse({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = WatchSerializer(movie, data=request.data, partial=True, context={'request': request})
+        serializer = WatchSerializer(content, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
-            original_data = WatchSerializer(movie).data
+            original_data = WatchSerializer(content).data
             serializer.save()
             updated_data = serializer.data
             changes = {field: updated_data[field] for field in updated_data if
