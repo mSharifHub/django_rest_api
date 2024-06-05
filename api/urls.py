@@ -23,7 +23,7 @@ urlpatterns = [
     # path("api-auth/", include('rest_framework.urls')),
     path("api/reviews/<str:username>/", UserReview.as_view(), name="user_reviews_detail"),
 
-    #end points to
+    # end points to streams
     path("api/streams/all/", StreamingPlatformCreateView.as_view(), name="streaming_channels_create"),
     path("api/streams/<int:pk>/", StreamingPlatformDetailView.as_view(), name="streaming_channels_detail"),
 

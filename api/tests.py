@@ -2,11 +2,43 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
-from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
+from api.models import StreamingPlatform, WatchList
 
-from api import serializers
-from api.models import StreamingPlatform
+
+class WatchListBaseTestCase(APITestCase):
+    def setUp(self):
+        self.platform = StreamingPlatform.objects.create(
+            streamer="Netflix",
+            about="Popular streaming",
+            url="https://www.netflix.com",
+        )
+
+        self.watchlist_data = {
+            "title": "Invasion",
+            "description": "science fiction",
+            "platform": self.platform,
+            "active": True,
+            "average_rating": 4.5,
+            "number_rating": 80,
+        }
+
+        self.invalid_watchlist_data = {
+            "title": "",
+            "description": "Top suspense. No title",
+            "platform": self.platform,
+            "active": False,
+            "average_rating": 2.0,
+            "number_rating": 3
+        }
+
+        self.admin_user = User.objects.create_superuser('admin', '<EMAIL>', '<PASSWORD>')
+        self.client = APIClient()
+
+        refresh_token = RefreshToken.for_user(self.admin_user)
+        self.access_token = str(refresh_token.access_token)
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer' + self.access_token)
+        print(self.access_token)  # debug self.access token due to IDE warning
 
 
 class StreamPlatformTestCase(APITestCase):

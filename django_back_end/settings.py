@@ -83,18 +83,10 @@ WSGI_APPLICATION = "django_back_end.wsgi.application"
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
-    'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
 
-    # 'DEFAULT_THROTTLE_CLASSES': [
-    #     'rest_framework.throttling.AnonRateThrottle',
-    #     'rest_framework.throttling.UserRateThrottle',
-    # ],
+    'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
 
     'DEFAULT_THROTTLE_RATES': {
         'anon': '3/day',
