@@ -93,9 +93,19 @@ class WatchReviewList(generics.ListAPIView):
         return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
 
-class StreamingChannels(viewsets.ModelViewSet):
+class StreamingPlatformCreateView(generics.ListCreateAPIView):
     queryset = StreamingPlatform.objects.all()
     serializer_class = StreamingPlatformSerializer
+    permission_classes = [AdminOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class StreamingPlatformDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StreamingPlatform.objects.all()
+    serializer_class = StreamingPlatformSerializer
+    permission_classes = [AdminOrReadOnly]
 
 
 class WatchListView(APIView):
