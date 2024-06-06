@@ -32,10 +32,8 @@ class WatchList(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or slugify(self.title) != self.slug:
             self.slug = slugify(self.title)
-        else:
-            self.slug = slugify(self.slug)
         super().save(*args, **kwargs)
 
 

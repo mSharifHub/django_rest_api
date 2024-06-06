@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
+from django.test import TestCase
+from django.utils.text import slugify
 from rest_framework_simplejwt.tokens import RefreshToken
 from api.models import StreamingPlatform, WatchList
 
@@ -127,3 +129,49 @@ class RetrieveWatchListTestCase(WatchListBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()), 1)
         self.assertEqual(response.json()[0]['title'], 'Invasion')
+
+
+class WatchListModelTestCase(TestCase):
+    def setUp(self):
+        self.streaming_platform = StreamingPlatform.objects.create(
+            streamer="Netflix",
+            about="Popular streaming",
+            url="https://www.netflix.com",
+        )
+
+        self.watchlist_data = {
+            "title": "Invasion",
+            "description": "science fiction horror show",
+            "platform": self.streaming_platform,
+            "active": True,
+            "average_rating": 4.5,
+            "number_rating": 80,
+        }
+
+    def test_create_watchlist(self):
+        watchlist = WatchList.objects.create(**self.watchlist_data)
+        self.assertEqual(watchlist.title, 'Invasion')
+        self.assertEqual(watchlist.slug, slugify("Invasion"))
+        self.assertEqual(watchlist.platform.id, self.streaming_platform.id)
+        self.assertTrue(watchlist.active)
+        self.assertIsNotNone(watchlist.created_at)
+
+    def test_slug_create(self):
+        watchlist = WatchList.objects.create(**self.watchlist_data)
+        self.assertEqual(watchlist.slug, slugify("Invasion"))
+
+    def test_blank_slug(self):
+        self.watchlist_data['slug'] = ""
+        watchlist = WatchList.objects.create(**self.watchlist_data)
+        self.assertEqual(watchlist.slug, slugify(watchlist.title))
+
+    def test_update_watchlist(self):
+        watchlist = WatchList.objects.create(**self.watchlist_data)
+        watchlist.title = "updated title"
+        watchlist.save()
+        self.assertEqual(watchlist.title, "updated title")
+        self.assertEqual(watchlist.slug, slugify("updated title"))
+
+    def test_watchlist_associated_with_platform(self):
+        watchlist = WatchList.objects.create(**self.watchlist_data)
+        self.assertEqual(watchlist.platform.streamer, "Netflix")
